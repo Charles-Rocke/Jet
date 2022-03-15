@@ -5,5 +5,14 @@
   <center><h1>Home</h1></center> 
 </div>
 <br>
-
+<form method="POST" action="{{url_for('create_wallet')}}">
+   <!--name -->
+   <div class="mb-3" id = "driverName">
+      <label align= "left" for="exampleFormControlInput1" class="form-label"><b>Enter your full name:</b></label>
+      <input name="user_name" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Full name">
+   </div>
+   <button type="submit" class="button btn btn-primary" onclick="this.classList.toggle('button--loading')">
+    	<span class="button__text">Sign-up</span>
+	</button>
+</form>
 {% endblock %}
