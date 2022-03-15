@@ -15,7 +15,7 @@ def home():
 def create_wallet():
 		if request.method == 'POST':
 			# get user name
-			user_name = #form input
+			user_name = request.form.get('user_name')
 
 			# create cloud wallet
 			owner_name = None  # Can be None
