@@ -1,1 +1,6 @@
 Create cloud wallet first
+the cloud wallet can be a file to start
+	write the wallet id to the file
+on button click - open the file and retrieve the walletId from the file
+	return the walletId to get the specific user name
+log user in
