@@ -17,13 +17,10 @@ def get_credId():
 	
 	# get the utc times into a list
 	for d in api_data:
-	    for key, value in d.items():
-	        if key == "issuedAtUtc":
-	            utc_list.append(d.get("issuedAtUtc"))
-	            maximum = max(utc_list)
-	# get the verification url associated with the most recent time
-	for d in api_data:
-	    for key, value in d.items():
-	        if value == maximum:
-	            cred_id = d["credentialId"]
+		for key, value in d.items():
+			if key == "issuedAtUtc":
+				utc_list.append(d.get("issuedAtUtc"))
+				maximum = max(utc_list)
+				if value == maximum:
+					cred_id = d["credentialId"]
 	return cred_id

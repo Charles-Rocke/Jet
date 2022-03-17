@@ -47,7 +47,7 @@ def login():
 				verif_id = d['verificationId']
 				print(verif_id)
 				# 2.
-	with open("JRocke", "r") as cw:
+	with open("JR", "r") as cw:
 		walletId = cw.readline()
 	cwId = walletId
 	# 3.

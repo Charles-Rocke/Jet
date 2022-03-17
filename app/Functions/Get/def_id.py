@@ -1,4 +1,4 @@
-from app.Constants.contants import SCHEMA_NAME
+from app.Constants.constants import SCHEMA_NAME
 def get_def():
 	import requests
 	url = "https://api.trinsic.id/credentials/v1/definitions/credentials"
