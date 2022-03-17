@@ -4,6 +4,21 @@
 # generating a verification url,
 # and presenting credentials
 def login():
+	import requests
+
+	from app import create_app
+	from app.Constants.constants import API_KEY
+	from trinsic.service_clients import CredentialsClient, WalletClient, ServiceClientCredentials
+
+
+	# Credentials API
+	credentials_client = CredentialsClient(ServiceClientCredentials(API_KEY))
+	credentials_client.config.retry_policy.retries = 0
+	
+	# Wallet API
+	wallet_client = WalletClient(ServiceClientCredentials(API_KEY))
+	wallet_client.config.retry_policy.retries = 0
+
 	# generate verification url
 	policy_id = "55d29b9e-869d-418e-ee96-08da0139ae84"
 	verification = credentials_client.create_verification_from_policy(policy_id)
@@ -26,10 +41,9 @@ def login():
 				maximum = max(utc_list)
 	# get the verification url associated with the most recent time
 	for d in json_resp:
-	  for key, value in d.items():
+		for key, value in d.items():
 			if value == maximum:
 				verif_url = d["verificationRequestUrl"]
-				print(verif_url)
 				verif_id = d['verificationId']
 				print(verif_id)
 				# 2.
