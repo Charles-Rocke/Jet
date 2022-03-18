@@ -20,4 +20,4 @@ def get_def():
 	# get id out of list and return it
 	for id in list_def:
 		final_id = id
-		return final_id
+	return final_id

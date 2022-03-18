@@ -3,10 +3,8 @@
 # combines retieving walletId
 # generating a verification url,
 # and presenting credentials
-def login():
+def signin():
 	import requests
-
-	from app import create_app
 	from app.Constants.constants import API_KEY
 	from trinsic.service_clients import CredentialsClient, WalletClient, ServiceClientCredentials
 

@@ -1,6 +1,6 @@
 # get the "issuedAtUtc" for the most recently issued credential and get the credential id associated with it
 # This may need changing if product grows
-def get_credId():
+def get_credurl():
 	import requests
 	
 	url = "https://api.trinsic.id/credentials/v1/credentials"
@@ -22,5 +22,5 @@ def get_credId():
 				utc_list.append(d.get("issuedAtUtc"))
 				maximum = max(utc_list)
 				if value == maximum:
-					cred_id = d["credentialId"]
-	return cred_id
+					cred_url = d["offerUrl"]
+	return cred_url
