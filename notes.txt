@@ -1,15 +1,4 @@
-Work on sign up (same as login fuctionality)
+Integrate with my other sites and software
+Build front-end wallet extension
 Build a team
 Prospect Customers
-
-cred_id = e64174d1-c100-4bef-b2b3-ca00fd2e403a
-
-
-@views.route('/login', methods=['GET', 'POST'])
-def login():
-	if request.method == 'POST':
-		signin.signin()
-		return redirect(url_for('views.welcome'))
-	return render_template("login.html")
-
-*** need to add user to company database on signup ***
