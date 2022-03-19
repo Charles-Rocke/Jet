@@ -1,12 +1,13 @@
 from app.SDK.sdk import wallet_client
-from app.Functions.Auth import signup, signin
+from app.Functions.Auth import signup, signin, auth_func
 from app.Functions.Get import issuedAt, def_id
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 import uuid
 from app.Constants.constants import API_KEY
 from trinsic.service_clients import CredentialsClient, WalletClient, ServiceClientCredentials
-from flask_login import login_required, current_user
-
+from flask_login import login_required, current_user, login_user
+from .models import Note, User
+from . import db
 
 # Credentials API
 credentials_client = CredentialsClient(ServiceClientCredentials(API_KEY))
@@ -45,13 +46,15 @@ def home():
 			connection_id = None  # Can be null | <connection identifier>
 			automatic_issuance = True
 			print("creating credential")
+			# p4msp4m is Full name & haven is First Name
 			credential_values = {
-			  "First Name": user_fname,
+			  "Full Name": user_fname,
 			  "Email": user_email,
 				"Account ID" : uuid.uuid4()
 			}
+			# change the way the definition id is recieved
 			credential = credentials_client.create_credential({
-			  "definitionId": "CP8tWh3qwcD4rSy3fcfRrT:3:CL:284024:tag",
+			  "definitionId": "A2Ands9NsWKPXkrDR8ELic:3:CL:283274:tag",
 			  "connectionId": connection_id,
 			  "automaticIssuance": automatic_issuance,
 			  "credentialValues": credential_values
@@ -62,7 +65,29 @@ def home():
 			wallet_id = wallet.wallet_id
 			print("got cred_id and wallet_id")
 			credential = wallet_client.accept_credential(wallet_id, cred_url)
-			print("redirecting to login")
+			print(cred_url)
+			
+			# retrieve wallet
+			json_profile = auth_func.open_wallet()
+			# retrieve email and first name from cloud wallet
+			email = json_profile['email']
+			firstName = json_profile['first name']
+	
+			user = User.query.filter_by(email=email).first()
+			if user:
+					flash('Email already exists', category='error')
+			elif len(email) < 4:
+					flash('Email must be longer than 3 characters.', category = 'error')
+			elif len(firstName) < 2:
+					flash('Firstname must be longer than 1 character.', category = 'error')
+			else:
+					# add user to the data base
+					new_user = User(email=email, fname=firstName)
+					db.session.add(new_user)
+					db.session.commit()
+					login_user(new_user, remember=True)
+					flash('Account created!', category = 'success')
+					return redirect(url_for('views.welcome'))
 			return redirect(url_for('auth.login'))
 		return render_template("home.html")
 
@@ -71,6 +96,3 @@ def home():
 def welcome():
 	
 	return render_template("welcome.html", user=current_user)
-
-
-

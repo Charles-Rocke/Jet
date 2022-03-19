@@ -7,7 +7,7 @@ def get_credurl():
 
 	headers = {
 	    "Accept": "application/json",
-	    "Authorization": "Bearer VDKTn73klPr3xDPXNuRjAopk1GB7oFziOTU-t2QVscU"
+	    "Authorization": "Bearer NdIdxyi5HonBbW5UjbtXbt-CKiWPQk5cTzlL_aOcFnQ"
 	}
 	
 	response = requests.request("GET", url, headers=headers)
@@ -23,4 +23,5 @@ def get_credurl():
 				maximum = max(utc_list)
 				if value == maximum:
 					cred_url = d["offerUrl"]
+					print(cred_url)
 	return cred_url

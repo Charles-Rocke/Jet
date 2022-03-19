@@ -8,6 +8,7 @@ def signin():
 	import json
 	from app.Constants.constants import API_KEY
 	from trinsic.service_clients import CredentialsClient, WalletClient, ServiceClientCredentials
+	from app.Constants import constants
 
 
 	# Credentials API
@@ -19,13 +20,13 @@ def signin():
 	wallet_client.config.retry_policy.retries = 0
 
 	# generate verification url
-	policy_id = "55d29b9e-869d-418e-ee96-08da0139ae84"
+	policy_id = constants.policy_id
 	verification = credentials_client.create_verification_from_policy(policy_id)
 	  # Get the most recent verification
 	url = "https://api.trinsic.id/credentials/v1/verifications"
 	headers = {
 	  "Accept": "text/plain",
-	  "Authorization": "Bearer VDKTn73klPr3xDPXNuRjAopk1GB7oFziOTU-t2QVscU"
+	  "Authorization": "Bearer NdIdxyi5HonBbW5UjbtXbt-CKiWPQk5cTzlL_aOcFnQ"
   }
 
 	response = requests.request("GET", url, headers=headers)
