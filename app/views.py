@@ -5,6 +5,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 import uuid
 from app.Constants.constants import API_KEY
 from trinsic.service_clients import CredentialsClient, WalletClient, ServiceClientCredentials
+from flask_login import login_required, current_user
 
 
 # Credentials API
@@ -62,21 +63,14 @@ def home():
 			print("got cred_id and wallet_id")
 			credential = wallet_client.accept_credential(wallet_id, cred_url)
 			print("redirecting to login")
-			return redirect(url_for('views.login'))
+			return redirect(url_for('auth.login'))
 		return render_template("home.html")
 
 # Create cloud wallet view
 @views.route('/welcome', methods=['GET', 'POST'])
 def welcome():
 	
-	return render_template("welcome.html")
+	return render_template("welcome.html", user=current_user)
 
-@views.route('/login', methods=['GET', 'POST'])
-def login():
-	if request.method == 'POST':
-		# open the cloud wallet file
-		# retrieve the walletId
-		signin.signin()
-		return redirect(url_for('views.welcome'))
-	return render_template("login.html")
+
 
