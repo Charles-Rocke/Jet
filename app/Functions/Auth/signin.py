@@ -5,6 +5,7 @@
 # and presenting credentials
 def signin():
 	import requests
+	import json
 	from app.Constants.constants import API_KEY
 	from trinsic.service_clients import CredentialsClient, WalletClient, ServiceClientCredentials
 
@@ -44,9 +45,10 @@ def signin():
 				verif_url = d["verificationRequestUrl"]
 				verif_id = d['verificationId']
 				print(verif_id)
+				print(verif_url)
 				# 2.
-	with open("JR", "r") as cw:
-		walletId = cw.readline()
-	cwId = walletId
+	with open("Profile.json", "r") as profile_data:
+	  user_data = json.load(profile_data)
+	wallet_id = user_data['walletId']
 	# 3.
-	wallet_client.submit_verification_from_data_auto_select(cwId, verif_url)
+	#wallet_client.submit_verification_from_data_auto_select(wallet_id, verif_url)

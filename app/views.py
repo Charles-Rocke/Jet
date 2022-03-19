@@ -23,20 +23,21 @@ views = Blueprint('views', __name__)
 def home():
 		if request.method == 'POST':
 			# get user name
-			user_name = request.form.get('user_name')
+			user_fname = request.form.get('fname')
+			user_lname = request.form.get('lname')
 			user_email = request.form.get('user_email')
 			# create cloud wallet
-			owner_name = None  # Can be None
+			owner_name = user_fname + " " + user_lname  # Can be None
 			wallet_id = None  # Can be None
 			# if 'Bad Request' here:
 				# delete some of the cloud wallets created
 			wallet = wallet_client.create_wallet({
-			  "ownerName": user_name,
+			  "ownerName": owner_name,
 			  "wallet_id": wallet_id
 			})
 			print("wallet created")
 			# create cloud wallet
-			signup.cloud_wallet(user_name, wallet.wallet_id)
+			signup.cloud_wallet(user_fname, user_lname, user_email, wallet.wallet_id)
 			print("cloud wallet created")
 			
 			# auto issue credential
@@ -44,13 +45,10 @@ def home():
 			automatic_issuance = True
 			print("creating credential")
 			credential_values = {
-			  "First Name": user_name,
+			  "First Name": user_fname,
 			  "Email": user_email,
 				"Account ID" : uuid.uuid4()
 			}
-			print("credential created")
-			print()
-			print("offering credential")
 			credential = credentials_client.create_credential({
 			  "definitionId": "CP8tWh3qwcD4rSy3fcfRrT:3:CL:284024:tag",
 			  "connectionId": connection_id,

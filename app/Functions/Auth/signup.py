@@ -18,9 +18,9 @@ def cloud_wallet(fname, lname, email, wallet_id):
 	json_profile ={}
 
 	#accept arguments
-	user_email = email
 	user_fname = fname
 	user_lname = lname
+	user_email = email
 	user_walletId = wallet_id
 
 	#prepare data for .json dump
@@ -33,19 +33,6 @@ def cloud_wallet(fname, lname, email, wallet_id):
 	# write the above data to a json file
 	with open("Profile.json", "w") as user_profile:
 	  json.dump(json_profile, user_profile)
-
-	# file name = cloud_wallet or cw
-	cw_name = user_name
-	# walletId will be put in a list
-	wallet = [walletId]
-	
-	# Open the file for writing
-	# This creates a new filename.
-	with open(cw_name, "w") as cw:
-		for walletId in wallet:
-			cw.write(walletId)
-	
-	print(f"Done writing to file {cw}")
 
 # Sign-up for a new site
 # need to store email and  Jet generated password in json
@@ -70,4 +57,4 @@ def jet_signup():
 	json_profile['last name'] = lname
 	json_profile['email'] = email
 	json_profile['walletId'] = wallet_id
-	return 
+	return json_profile
