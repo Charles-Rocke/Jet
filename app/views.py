@@ -61,11 +61,12 @@ def home():
 			})
 			print("got def id and credential offered")
 			# auto accept credential
+			cred_url = None
 			cred_url = issuedAt.get_credurl()
 			wallet_id = wallet.wallet_id
 			print("got cred_id and wallet_id")
 			credential = wallet_client.accept_credential(wallet_id, cred_url)
-			print(cred_url)
+			print("cred_url success!")
 			
 			# retrieve wallet
 			json_profile = auth_func.open_wallet()

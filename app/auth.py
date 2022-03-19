@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import User
+from .models import User, UserTwo
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
 from app.Functions.Auth import signup, signin, auth_func
@@ -14,8 +14,7 @@ def login():
 		json_profile = auth_func.open_wallet()
 		# retrieve email from cloud wallet
 		email = json_profile['email']
-		fname = json_profile['first name']
-
+		
 		user = User.query.filter_by(email=email).first()
 		if user:
 			# run verification
@@ -33,6 +32,7 @@ def logout():
     logout_user()
     return redirect(url_for('auth.login'))
 
+# new sign-up route
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
 	if request.method == 'POST':
@@ -41,7 +41,9 @@ def sign_up():
 		email = json_profile['email']
 		firstName = json_profile['first name']
 
-		user = User.query.filter_by(email=email).first()
+		print(email)
+		
+		user = UserTwo.query.filter_by(email=email).first()
 		if user:
 				flash('Email already exists', category='error')
 		elif len(email) < 4:
@@ -50,7 +52,7 @@ def sign_up():
 				flash('Firstname must be longer than 1 character.', category = 'error')
 		else:
 				# add user to the data base
-				new_user = User(email=email, firstName=firstName)
+				new_user = UserTwo(email=email, fname=firstName)
 				db.session.add(new_user)
 				db.session.commit()
 				login_user(new_user, remember=True)
